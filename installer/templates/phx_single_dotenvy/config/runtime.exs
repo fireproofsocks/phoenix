@@ -3,21 +3,12 @@ import Dotenvy
 
 # For local development, read dotenv files inside the envs/ dir;
 # for releases, read them at the RELEASE_ROOT
-config_dir_prefix =
-  case System.fetch_env("RELEASE_ROOT") do
-    :error ->
-      IO.puts("Loading dotenv files from envs/")
-      "envs/"
-
-    {:ok, release_root} ->
-      IO.puts("Loading dotenv files from #{release_root}")
-      "#{release_root}/"
-  end
+env_dir_prefix = System.get_env("RELEASE_ROOT") || Path.expand("./envs/") <> "/"
 
 source!([
-  "#{config_dir_prefix}.env",
-  "#{config_dir_prefix}.#{config_env()}.env",
-  "#{config_dir_prefix}.#{config_env()}.overrides.env",
+  "#{env_dir_prefix}.env",
+  "#{env_dir_prefix}.#{config_env()}.env",
+  "#{env_dir_prefix}.#{config_env()}.overrides.env",
   System.get_env()
 ])
 

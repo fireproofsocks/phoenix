@@ -13,6 +13,13 @@ config :<%= @app_name %><%= if @namespaced? do %>,
   ecto_repos: [<%= @app_module %>.Repo]<% end %><%= if @generators do %>,
   generators: <%= inspect @generators %><% end %><% end %>
 
+# Sets UTC datestamps and UUIDs for generated Ecto schemas
+config :<%= @app_name %>, :generators,
+  migration: true,
+  binary_id: true,
+  timestamp_type: :utc_datetime,
+  sample_binary_id: "11111111-1111-1111-1111-111111111111"
+
 # Configures the endpoint
 config :<%= @app_name %>, <%= @endpoint_module %>,
   url: [host: "localhost"],
